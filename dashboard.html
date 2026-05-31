@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auro AI — Business Mastery Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#07070f;--bg2:#0d0d1c;--bg3:#111124;
+  --gold:#F7C63A;--orange:#FF6B35;
+  --text:#e8e8f0;--muted:#6e6e8e;
+  --border:rgba(247,198,58,0.1);--border2:rgba(255,255,255,0.06);
+  --teal:#3ecfb2;--red:#ff6b6b;--purple:#a97cf8;--green:#4ade80;
+  --sidebar-w:310px;--header-h:62px;
+}
+
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;
+  overflow-x:hidden;
+}
+
+.bg-grid{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(247,198,58,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(247,198,58,.03) 1px,transparent 1px);
+  background-size:56px 56px;
+}
+.bg-glow{
+  position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+  width:860px;height:500px;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse,rgba(247,198,58,.08) 0%,rgba(255,107,53,.04) 45%,transparent 70%);
+}
+
+/* ── HEADER ── */
+#header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:200;
+  display:flex;align-items:center;gap:0;padding:0 24px 0 20px;
+  background:rgba(7,7,15,.9);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+#hamburger{
+  display:none;width:40px;height:40px;margin-right:8px;flex-shrink:0;
+  background:none;border:none;cursor:pointer;
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+#hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .2s ease}
+.header-logo{
+  font-family:'Bebas Neue',cursive;font-size:1.7rem;letter-spacing:.06em;
+  color:var(--gold);text-shadow:0 0 18px rgba(247,198,58,.4);text-decoration:none;
+  flex-shrink:0;
+}
+.header-logo span{color:var(--text)}
+.header-divider{width:1px;height:24px;background:var(--border2);margin:0 16px;flex-shrink:0}
+.header-course{font-size:.78rem;font-weight:500;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-spacer{flex:1}
+.progress-pill{
+  display:flex;align-items:center;gap:10px;flex-shrink:0;
+  background:rgba(255,255,255,.03);border:1px solid var(--border2);
+  border-radius:20px;padding:6px 14px;
+}
+.progress-bar-wrap{width:80px;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--orange));border-radius:3px;transition:width .4s ease}
+.progress-pct{font-size:.72rem;font-weight:600;color:var(--muted);white-space:nowrap}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  position:fixed;top:var(--header-h);left:0;bottom:0;width:var(--sidebar-w);z-index:100;
+  background:var(--bg2);border-right:1px solid var(--border2);
+  overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--border2) transparent;
+}
+#sidebar::-webkit-scrollbar{width:4px}
+#sidebar::-webkit-scrollbar-track{background:transparent}
+#sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+.sidebar-top{padding:20px 20px 16px}
+.sidebar-progress-label{
+  font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:10px;
+}
+.sidebar-bar-wrap{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.sidebar-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--orange));border-radius:3px;transition:width .4s ease}
+.sidebar-progress-text{font-size:.78rem;color:var(--muted)}
+.sidebar-progress-text strong{color:var(--text)}
+
+/* Module group */
+.mod-group{border-bottom:1px solid var(--border2)}
+.mod-toggle{
+  width:100%;display:flex;align-items:center;gap:12px;padding:14px 20px;
+  background:none;border:none;cursor:pointer;text-align:left;
+  transition:background .15s ease;
+}
+.mod-toggle:hover{background:rgba(255,255,255,.02)}
+.mod-icon{
+  width:32px;height:32px;border-radius:7px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+}
+.mod-info{flex:1;min-width:0}
+.mod-title{
+  font-family:'Bebas Neue',cursive;font-size:1rem;letter-spacing:.04em;
+  color:var(--text);display:block;line-height:1.1;
+}
+.mod-progress-text{font-size:.72rem;color:var(--muted);display:block;margin-top:2px}
+.mod-chevron{
+  flex-shrink:0;font-size:.7rem;color:var(--muted);
+  transition:transform .25s ease;display:block;
+}
+.mod-toggle[aria-expanded="true"] .mod-chevron{transform:rotate(180deg)}
+
+/* Lesson list */
+.lesson-list{display:none;padding:0 0 8px}
+.mod-toggle[aria-expanded="true"] + .lesson-list{display:block}
+.lesson-item{
+  display:flex;align-items:center;gap:10px;padding:9px 20px 9px 16px;
+  cursor:pointer;transition:background .15s ease;border-left:3px solid transparent;
+}
+.lesson-item:hover{background:rgba(255,255,255,.03)}
+.lesson-item.active{background:rgba(255,255,255,.04)}
+.lesson-check{
+  width:20px;height:20px;border-radius:50%;border:2px solid var(--border2);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;transition:all .2s ease;
+}
+.lesson-check.done{background:#4ade80;border-color:#4ade80;color:#07070f;font-weight:700}
+.lesson-title{font-size:.82rem;color:var(--muted);flex:1;line-height:1.3;transition:color .15s ease}
+.lesson-item.active .lesson-title,.lesson-item:hover .lesson-title{color:var(--text)}
+.lesson-dur{font-size:.72rem;color:rgba(110,110,142,.6);flex-shrink:0;white-space:nowrap}
+
+/* ── OVERLAY (mobile) ── */
+#overlay{
+  display:none;position:fixed;inset:0;z-index:90;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(3px);
+}
+
+/* ── MAIN ── */
+#main{
+  margin-left:var(--sidebar-w);margin-top:var(--header-h);
+  min-height:calc(100vh - var(--header-h));position:relative;z-index:1;
+}
+
+/* ── WELCOME SCREEN ── */
+.welcome{
+  min-height:calc(100vh - var(--header-h));
+  display:flex;align-items:center;justify-content:center;
+  padding:60px 40px;text-align:center;position:relative;
+}
+.welcome-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:700px;height:400px;pointer-events:none;
+  background:radial-gradient(ellipse,rgba(247,198,58,.1) 0%,transparent 65%);
+}
+.welcome-inner{position:relative;z-index:1;max-width:560px}
+.w-eyebrow{
+  font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--orange);display:block;margin-bottom:20px;
+}
+.w-h1{
+  font-family:'Bebas Neue',cursive;font-size:4rem;letter-spacing:.04em;
+  line-height:1;margin-bottom:20px;
+}
+.w-h1 .gold{color:var(--gold)}
+.w-sub{color:var(--muted);font-size:.97rem;max-width:440px;margin:0 auto 36px;line-height:1.7}
+.welcome-modules{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px;
+}
+.welcome-mod-pill{
+  background:rgba(255,255,255,.03);border:1px solid var(--border2);
+  border-radius:8px;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;text-align:left;
+}
+.w-mod-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.w-mod-name{font-size:.82rem;font-weight:500;color:var(--text)}
+.btn-begin{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  color:#07070f;font-family:'DM Sans',sans-serif;font-weight:800;font-size:1.05rem;
+  padding:18px 40px;border-radius:7px;border:none;cursor:pointer;
+  box-shadow:0 4px 28px rgba(247,198,58,.3);transition:transform .2s ease,box-shadow .2s ease;
+}
+.btn-begin:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(247,198,58,.45)}
+
+/* ── LESSON VIEW ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.fade-in{animation:fadeIn .4s ease both}
+
+.lesson-view{padding:40px 48px 80px;max-width:860px}
+.breadcrumb{font-size:.78rem;color:var(--muted);margin-bottom:24px}
+.breadcrumb span{color:var(--text)}
+
+/* Video block */
+.lesson-video-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  overflow:hidden;margin-bottom:32px;
+  box-shadow:0 0 40px rgba(0,0,0,.4);
+}
+.lesson-video-embed{
+  position:relative;aspect-ratio:16/9;background:#08081a;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+}
+.lesson-play-btn{
+  width:56px;height:56px;border-radius:50%;border:2px solid var(--mc,var(--gold));
+  display:flex;align-items:center;justify-content:center;
+}
+.lesson-play-btn::after{
+  content:'';width:0;height:0;margin-left:4px;
+  border-top:10px solid transparent;border-bottom:10px solid transparent;
+  border-left:18px solid var(--mc,var(--gold));
+}
+.lesson-video-caption{font-size:.8rem;color:var(--muted);text-align:center;padding:0 20px}
+.lesson-video-caption strong{color:var(--text);display:block;margin-bottom:4px}
+.lesson-duration-badge{
+  position:absolute;top:12px;right:12px;
+  background:rgba(0,0,0,.7);border:1px solid var(--border2);
+  border-radius:20px;padding:4px 10px;font-size:.72rem;color:var(--muted);
+}
+
+/* Lesson header */
+.lesson-tag-line{
+  font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:12px;color:var(--mc,var(--gold));
+}
+.lesson-h1{
+  font-family:'Bebas Neue',cursive;font-size:2.5rem;letter-spacing:.03em;
+  line-height:1;margin-bottom:16px;
+}
+.lesson-meta{
+  display:flex;align-items:center;gap:16px;margin-bottom:36px;flex-wrap:wrap;
+}
+.lesson-meta-item{
+  display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);
+}
+.lesson-meta-item svg{width:14px;height:14px;opacity:.6}
+.badge-done{
+  background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);
+  border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:600;
+  color:#4ade80;letter-spacing:.08em;
+}
+
+/* Lesson body */
+.lesson-body{line-height:1.8;color:#c8c8d8}
+.lesson-body h3{
+  font-family:'Bebas Neue',cursive;font-size:1.35rem;letter-spacing:.04em;
+  color:var(--text);margin:32px 0 12px;
+}
+.lesson-body p{margin-bottom:16px}
+.lesson-body strong{color:var(--text);font-weight:600}
+.lesson-body ul{list-style:none;margin:16px 0 20px}
+.lesson-body ul li{
+  display:flex;align-items:flex-start;gap:12px;
+  margin-bottom:10px;font-size:.93rem;
+}
+.lesson-body ul li::before{content:'✦';color:var(--gold);font-size:.72rem;margin-top:5px;flex-shrink:0}
+.callout{
+  border-left:3px solid var(--mc,var(--gold));
+  background:var(--mc-bg,rgba(247,198,58,.06));
+  border-radius:0 8px 8px 0;padding:18px 22px;margin:24px 0;
+}
+.callout-label{
+  font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--mc,var(--gold));display:block;margin-bottom:8px;
+}
+.takeaway{
+  border:1px solid rgba(247,198,58,.25);
+  background:rgba(247,198,58,.05);
+  border-radius:8px;padding:18px 22px;margin:24px 0;
+}
+.takeaway-label{
+  font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:8px;
+}
+
+/* Bottom nav */
+.lesson-nav{
+  display:flex;align-items:stretch;gap:16px;margin-top:48px;flex-wrap:wrap;
+}
+.nav-btn{
+  flex:1;min-width:140px;background:var(--bg2);border:1px solid var(--border2);
+  border-radius:10px;padding:16px 20px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--muted);
+  text-align:left;transition:border-color .2s ease,color .2s ease;
+  display:flex;flex-direction:column;gap:4px;
+}
+.nav-btn:hover:not(:disabled){border-color:var(--border);color:var(--text)}
+.nav-btn:disabled{opacity:.25;cursor:not-allowed}
+.nav-btn-label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.nav-btn-title{font-size:.85rem;color:var(--text);line-height:1.3;font-weight:500}
+.nav-btn.right{text-align:right}
+.btn-complete{
+  flex:1.5;background:linear-gradient(135deg,var(--gold),var(--orange));color:#07070f;
+  font-family:'DM Sans',sans-serif;font-weight:800;font-size:.95rem;
+  border:none;border-radius:10px;padding:16px 24px;cursor:pointer;
+  box-shadow:0 4px 20px rgba(247,198,58,.25);transition:transform .2s ease,box-shadow .2s ease;
+  white-space:nowrap;
+}
+.btn-complete:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(247,198,58,.4)}
+.btn-already-done{
+  flex:1.5;background:transparent;color:#4ade80;font-weight:600;
+  border:1.5px solid rgba(74,222,128,.4);border-radius:10px;padding:16px 24px;
+  font-family:'DM Sans',sans-serif;font-size:.95rem;cursor:default;
+}
+
+/* ── MODULE COMPLETE ── */
+.celebrate{
+  min-height:calc(100vh - var(--header-h));
+  display:flex;align-items:center;justify-content:center;
+  padding:60px 40px;text-align:center;
+}
+.celebrate-inner{max-width:480px}
+.celebrate-icon{
+  width:80px;height:80px;border-radius:50%;margin:0 auto 28px;
+  display:flex;align-items:center;justify-content:center;font-size:2rem;
+}
+.celebrate-h{
+  font-family:'Bebas Neue',cursive;font-size:2.8rem;letter-spacing:.04em;
+  line-height:1;margin-bottom:16px;
+}
+.celebrate-sub{color:var(--muted);font-size:.97rem;margin-bottom:36px;line-height:1.65}
+.celebrate-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),var(--orange));color:#07070f;
+  font-family:'DM Sans',sans-serif;font-weight:800;font-size:.95rem;
+  padding:15px 28px;border-radius:7px;border:none;cursor:pointer;
+  box-shadow:0 4px 20px rgba(247,198,58,.25);transition:transform .2s ease,box-shadow .2s ease;
+  text-decoration:none;display:inline-block;
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(247,198,58,.4)}
+.btn-outline{
+  background:transparent;color:var(--text);border:1.5px solid var(--border2);
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:.95rem;
+  padding:14px 26px;border-radius:7px;cursor:pointer;
+  transition:border-color .2s ease,color .2s ease;
+}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── COURSE COMPLETE ── */
+.course-complete-mods{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px auto;max-width:400px;
+}
+.cc-mod{
+  background:rgba(255,255,255,.03);border:1px solid var(--border2);
+  border-radius:8px;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+}
+.cc-mod-icon{font-size:1.2rem}
+.cc-mod-name{font-size:.82rem;font-weight:500;color:var(--text)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #hamburger{display:flex}
+  #header .header-divider,#header .header-course{display:none}
+  #sidebar{transform:translateX(-100%);transition:transform .25s ease}
+  #sidebar.open{transform:translateX(0)}
+  #overlay{display:none}
+  #overlay.visible{display:block}
+  #main{margin-left:0}
+  .lesson-view{padding:28px 20px 60px}
+  .lesson-h1{font-size:2rem}
+}
+@media(max-width:600px){
+  .welcome{padding:40px 20px}
+  .welcome-modules{grid-template-columns:1fr}
+  .w-h1{font-size:3rem}
+  .lesson-nav{flex-direction:column}
+  .nav-btn,.btn-complete,.btn-already-done{flex:none;width:100%}
+  .nav-btn.right{text-align:left}
+  .course-complete-mods{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- HEADER -->
+<header id="header">
+  <button id="hamburger" aria-label="Toggle menu" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+  <a href="index.html" class="header-logo">Auro <span>AI</span></a>
+  <div class="header-divider"></div>
+  <span class="header-course">Business Mastery Program</span>
+  <div class="header-spacer"></div>
+  <div class="progress-pill">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="header-bar" style="width:0%"></div></div>
+    <span class="progress-pct" id="header-pct">0% complete</span>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-top">
+    <span class="sidebar-progress-label">Your Progress</span>
+    <div class="sidebar-bar-wrap"><div class="sidebar-bar-fill" id="sidebar-bar" style="width:0%"></div></div>
+    <p class="sidebar-progress-text"><strong id="sidebar-done">0</strong> of <strong>20</strong> lessons complete</p>
+  </div>
+  <div id="sidebar-modules"></div>
+</aside>
+
+<!-- MOBILE OVERLAY -->
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main"></main>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  COURSE DATA
+// ════════════════════════════════════════════════════════
+const MODULES = [
+  {
+    id: 0,
+    title: 'Finance & Bookkeeping',
+    icon: '📊',
+    color: '#3ecfb2',
+    tagline: 'Automate your numbers — in 90 minutes a month.',
+    lessons: [
+      {
+        title: 'Why AI Is Changing Small Business Finance Forever',
+        duration: '8 min',
+        tag: 'Introduction',
+        body: `<h3>The Hidden Cost of Manual Finance</h3>
+<p>The average small business owner spends over 10 hours every month on financial admin — invoicing, reconciling accounts, categorising expenses, chasing payments. That's 120+ hours a year on work that generates zero revenue.</p>
+<p>AI changes this entirely. In this module you'll learn to automate the repetitive financial tasks that are draining your time and energy, and build a system that gives you clearer financial insight than most businesses ten times your size.</p>
+<div class="callout"><span class="callout-label">Student Result</span><p>"Before this course I was spending 10 hours a month on bookkeeping. After implementing the AI system it now takes me 90 minutes — and it's more accurate than anything I did manually." — Sarah R., Retail Shop Owner</p></div>
+<h3>What This Module Builds</h3>
+<ul>
+<li>An automated bookkeeping system connected to your bank data</li>
+<li>AI-generated monthly P&amp;L reports produced in minutes</li>
+<li>A 3-month cash flow forecast that updates automatically</li>
+<li>A tax prep system that flags deductions year-round</li>
+<li>A custom Finance AI assistant trained on your specific business</li>
+</ul>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>You don't need an accounting degree or expensive software. With free and low-cost AI tools, any small business owner can have a professional-grade financial system running in under a week.</p></div>`
+      },
+      {
+        title: 'Setting Up AI Bookkeeping from Scratch',
+        duration: '14 min',
+        tag: 'Practical Setup',
+        body: `<h3>The AI Bookkeeping Stack</h3>
+<p>You only need three tools to build a powerful AI bookkeeping system — and two of them are completely free:</p>
+<ul>
+<li><strong>Claude or ChatGPT</strong> — Your AI accountant. Categorises, analyses, and explains your finances in plain English.</li>
+<li><strong>Google Sheets</strong> — Free, cloud-based spreadsheet that acts as your financial database.</li>
+<li><strong>Zapier (free tier)</strong> — Connects your bank or accounting app to Google Sheets automatically.</li>
+</ul>
+<h3>Step-by-Step Setup</h3>
+<p>Start by exporting 3 months of transactions from your bank as a CSV file. Most banks offer this under "Download Statements" or "Export Transactions." Upload the CSV to Google Sheets, then run this prompt with Claude or ChatGPT:</p>
+<div class="callout"><span class="callout-label">Bookkeeping Prompt Template</span><p>"Here is a CSV of my business transactions for [month]. Please categorise each transaction into: Revenue, Rent, Payroll, Marketing, Software, Travel, Office Supplies, Other. Then summarise total spend per category and flag any unusual or duplicate transactions."</p></div>
+<p>Run this every month and you have instant categorised accounts — without paying a bookkeeper.</p>
+<h3>Connecting Zapier</h3>
+<p>Once the manual process is running, set up a Zapier automation: when a new row appears in your bank export, automatically append it to your Google Sheet. This eliminates even the CSV download step.</p>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>The setup takes about 45 minutes the first time. After that it's a 15-minute monthly task. Your AI does the heavy lifting — you just review and approve.</p></div>`
+      },
+      {
+        title: 'Cash Flow Forecasting with AI',
+        duration: '12 min',
+        tag: 'Advanced Skill',
+        body: `<h3>Why Cash Flow Kills Businesses</h3>
+<p>More businesses fail from cash flow problems than from lack of profitability. You can be technically profitable and still run out of money. AI cash flow forecasting solves this — giving you a clear view of what's coming 30, 60, and 90 days ahead.</p>
+<h3>The 3-Month Forecast Framework</h3>
+<p>Follow this 5-step process at the start of each month:</p>
+<ul>
+<li>Export the last 3 months of transactions</li>
+<li>Ask AI to identify your recurring income and expenses</li>
+<li>Input any known upcoming expenses (tax bill, equipment, etc.)</li>
+<li>Ask AI to project the next 90 days based on historical patterns</li>
+<li>Review the danger zones — months where cash could drop below your safety buffer</li>
+</ul>
+<div class="callout"><span class="callout-label">Forecast Prompt</span><p>"Based on these 3 months of transactions, identify my recurring income and expenses. Then project my cash flow for the next 90 days. Highlight any months where my balance may drop below $[YOUR BUFFER AMOUNT]. For each shortfall risk, suggest one specific action I can take to prevent it."</p></div>
+<h3>The Bank Approval Bonus</h3>
+<p>Banks and lenders expect to see 12-month cash flow forecasts. With AI you can produce a professional forecast in 20 minutes that previously required a financial consultant charging hundreds of dollars. This alone can help you secure better credit terms or a business loan when you need it.</p>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>A 90-day cash flow forecast takes 20 minutes with AI and gives you the financial visibility that most small business owners never have. Run it at the start of every month.</p></div>`
+      },
+      {
+        title: 'Automated Financial Reports & Tax Prep',
+        duration: '11 min',
+        tag: 'Automation',
+        body: `<h3>From Manual Reports to Automatic Insights</h3>
+<p>Most small business owners either pay hundreds of dollars for monthly reports or skip them entirely. AI lets you generate professional-grade financial reports in minutes — for free.</p>
+<h3>Monthly P&amp;L in 10 Minutes</h3>
+<p>At the end of each month, paste your transaction CSV into Claude or ChatGPT with this prompt:</p>
+<div class="callout"><span class="callout-label">Monthly Report Prompt</span><p>"Generate a Profit &amp; Loss summary from these transactions. Include: total revenue, total expenses broken down by category, net profit, profit margin percentage, and the top 3 expense categories. Identify any expenses that increased significantly compared to last month and explain what might be causing it."</p></div>
+<h3>Tax-Ready Year Round</h3>
+<p>Instead of scrambling at tax time, run a 10-minute weekly session to flag deductible expenses. Ask AI to label each transaction as: Fully Deductible, Partially Deductible, or Personal (non-deductible). By December, your records are already organised.</p>
+<div class="callout"><span class="callout-label">Student Result</span><p>"I used to pay my accountant £400 to prepare my annual return. With the AI organisation system I built in this lesson, I handed over a perfectly organised file. They charged me £150 and said it was the most organised records they'd ever seen. I saved $2,400." — Marcus T., Plumbing Contractor</p></div>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>Tax prep isn't a once-a-year panic — it's a 10-minute weekly habit. AI makes this easy. By the time your tax deadline arrives, 90% of the work is already done.</p></div>`
+      },
+      {
+        title: 'Building Your Custom Finance AI Assistant',
+        duration: '18 min',
+        tag: 'AI Assistant Build',
+        body: `<h3>Your Personal AI CFO</h3>
+<p>In this lesson you'll build a custom AI assistant that understands your business finances deeply — and can answer any financial question in seconds, 24 hours a day.</p>
+<h3>Setting Up Your Custom Finance AI</h3>
+<p>Use Claude Projects or ChatGPT Custom GPTs to create your dedicated finance assistant:</p>
+<ul>
+<li>Create a new Project in Claude or Custom GPT in ChatGPT</li>
+<li>Name it "[Your Business Name] Finance Assistant"</li>
+<li>Write a system prompt describing your business type, revenue model, and financial goals</li>
+<li>Upload your last 12 months of categorised transactions</li>
+<li>Add your monthly P&amp;L reports and annual budget targets</li>
+</ul>
+<h3>What to Feed Your Finance AI</h3>
+<ul>
+<li>12 months of categorised transaction history</li>
+<li>Your monthly P&amp;L reports</li>
+<li>Your annual budget or financial targets</li>
+<li>Any recurring invoices or supplier contracts</li>
+<li>Your tax summary from the previous year</li>
+</ul>
+<h3>The 10-Question Test</h3>
+<p>Before you rely on your Finance AI, put it through these validation questions:</p>
+<div class="callout"><span class="callout-label">Test Your Finance AI</span><p>1. What was my revenue last month? &nbsp;2. What are my top 3 expense categories? &nbsp;3. Am I spending more this quarter than last? &nbsp;4. What's my current profit margin? &nbsp;5. Which expenses are likely tax-deductible? &nbsp;6. How much have I spent on marketing this year? &nbsp;7. When was my largest single expense? &nbsp;8. What are my recurring monthly costs? &nbsp;9. Were there any unusual transactions this month? &nbsp;10. Project my cash balance in 60 days based on current patterns.</p></div>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>A properly trained Finance AI answers in 10 seconds what a bookkeeper would take 30 minutes to research. You've just built yourself a 24/7 financial advisor — at no extra cost.</p></div>`
+      }
+    ]
+  },
+  {
+    id: 1,
+    title: 'Marketing on Autopilot',
+    icon: '📣',
+    color: '#ff6b6b',
+    tagline: 'Replace a $2,000/month marketing team with AI.',
+    lessons: [
+      {
+        title: 'The AI Marketing Revolution for Small Business',
+        duration: '7 min',
+        tag: 'Introduction',
+        body: `<h3>One Person. Full Marketing Team Output.</h3>
+<p>Until recently, producing consistent, high-quality marketing content required either a large budget for agencies and freelancers, or hours of your own time every week. AI has changed this completely.</p>
+<p>A small business owner using AI tools today can produce the same output as a full marketing team — ad copy, social media content, email campaigns, brand voice, competitor analysis — in a fraction of the time.</p>
+<div class="callout"><span class="callout-label">The Real Cost of Not Using AI</span><p>A dedicated social media manager costs $500–$2,000 per month. A copywriter charges $100–$300 per piece of content. An email marketing specialist charges $500–$1,500 per month. AI replaces all three for a fraction of the cost — and works around the clock.</p></div>
+<h3>What This Module Builds</h3>
+<ul>
+<li>A library of high-converting ad copy for your products and services</li>
+<li>A 30-day social media content calendar generated in 10 minutes</li>
+<li>An automated email sequence that sells while you sleep</li>
+<li>A brand voice document so AI always sounds like you</li>
+<li>Your own custom Marketing AI assistant</li>
+</ul>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>The businesses growing fastest right now aren't the ones with the biggest marketing budgets. They're the ones using AI to produce more, better content than their competitors — faster and cheaper.</p></div>`
+      },
+      {
+        title: 'Writing AI Ad Copy That Actually Converts',
+        duration: '16 min',
+        tag: 'Ad Strategy',
+        body: `<h3>The AIDA Framework</h3>
+<p>The most effective direct-response ad copy follows a four-step structure called AIDA: <strong>Attention</strong> (stop the scroll), <strong>Interest</strong> (make them want to know more), <strong>Desire</strong> (show them what life looks like with your product), <strong>Action</strong> (clear call-to-action). AI is exceptionally good at generating copy within this framework when you give it the right input.</p>
+<h3>The Ad Copy Prompt Template</h3>
+<div class="callout"><span class="callout-label">Ad Copy Prompt</span><p>"Write 3 variations of a Facebook/Instagram ad for [your product/service]. Target audience: [describe your customer]. The main benefit is [core benefit]. The problem it solves is [pain point]. Tone: [confident / friendly / urgent]. Format: Attention-grabbing opening line, 2-3 sentences of body copy, and a call-to-action. Keep each version under 150 words."</p></div>
+<h3>A/B Testing with AI</h3>
+<p>Never run just one version of an ad. Ask AI to generate 5 different opening hooks for the same ad — each targeting a different emotional trigger (fear of loss, desire for status, saving time, saving money, social proof). Run two at a time with identical budgets and let the data decide. Within 3–5 days you'll know which hook resonates.</p>
+<ul>
+<li>Fear of loss: "Most small businesses will miss this window entirely."</li>
+<li>Time saving: "Cut your marketing workload by 80% — starting this week."</li>
+<li>Social proof: "500+ business owners already use this system."</li>
+<li>Aspiration: "Run your marketing like a Fortune 500 — on a small business budget."</li>
+</ul>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>AI generates 10 ad variations in the time it takes you to write one. Test systematically and you'll find a winning formula that your competitors can't easily copy.</p></div>`
+      },
+      {
+        title: '30-Day Social Media Content in 10 Minutes',
+        duration: '13 min',
+        tag: 'Content Automation',
+        body: `<h3>The Content Pillars System</h3>
+<p>Trying to invent new content every day is exhausting and unsustainable. The solution is to define 5 content pillars — recurring themes that rotate throughout the month. Every piece of content you create fits into one of these pillars:</p>
+<ul>
+<li><strong>Educate</strong> — Tips, how-tos, industry insights your audience can use immediately</li>
+<li><strong>Inspire</strong> — Success stories, transformations, motivational content</li>
+<li><strong>Engage</strong> — Questions, polls, "this or that" posts that invite comments</li>
+<li><strong>Promote</strong> — Direct offers, product features, limited-time deals</li>
+<li><strong>Relate</strong> — Behind-the-scenes, your story, team moments, day-in-the-life</li>
+</ul>
+<h3>The 10-Minute Calendar Prompt</h3>
+<div class="callout"><span class="callout-label">30-Day Content Prompt</span><p>"Create a 30-day social media content calendar for a [type of business] targeting [audience]. Use these 5 content pillars: Educate, Inspire, Engage, Promote, Relate. Post frequency: [X] times per week. For each post include: the pillar type, a suggested caption (under 150 words), and 5 relevant hashtags. Format as a table."</p></div>
+<p>One prompt. Thirty days of content ideas. Our students consistently report generating a full calendar in 11 minutes or less.</p>
+<h3>Scheduling Tools</h3>
+<p>Once your calendar is planned, use Buffer, Later, or Meta Business Suite (free) to schedule all posts in advance. Batch your entire month in one sitting — then forget about it and let automation handle the publishing.</p>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>Content consistency beats content perfection. A business that posts 5 days a week with AI-assisted content will always outperform one that posts once a week with "perfect" manually created content.</p></div>`
+      },
+      {
+        title: 'Email Campaigns That Sell While You Sleep',
+        duration: '15 min',
+        tag: 'Email Automation',
+        body: `<h3>The Most Profitable Channel You're Ignoring</h3>
+<p>Email marketing delivers an average return of <strong>$36 for every $1 spent</strong> — higher than any other marketing channel. Yet most small business owners either don't have an email list, or have one they never send to. AI makes building and running effective email campaigns faster than ever before.</p>
+<h3>The 5-Email Welcome Sequence</h3>
+<p>Every new subscriber should automatically receive this sequence:</p>
+<ul>
+<li><strong>Email 1 (Immediately)</strong> — Welcome + deliver what you promised (free resource, discount, access link)</li>
+<li><strong>Email 2 (Day 2)</strong> — Your story: why you started, what problem you solve, who you help</li>
+<li><strong>Email 3 (Day 4)</strong> — Social proof: a customer result, a case study, or a testimonial</li>
+<li><strong>Email 4 (Day 6)</strong> — Value bomb: your single best tip, insight, or resource, no strings attached</li>
+<li><strong>Email 5 (Day 8)</strong> — Soft offer: introduce your main product or service naturally</li>
+</ul>
+<div class="callout"><span class="callout-label">Email Prompt Template</span><p>"Write Email [number] of a 5-email welcome sequence for a [type of business]. The subscriber signed up for [lead magnet/freebie]. Tone: [warm / professional / conversational]. Goal of this email: [goal from the list above]. Include a subject line, preview text, and email body under 250 words."</p></div>
+<h3>Set Once, Sell Forever</h3>
+<p>Set up this sequence in ConvertKit, Mailchimp, or ActiveCampaign once. Every new subscriber who joins your list automatically goes through it — while you sleep, while you're on holiday, while you're serving other customers. This is true passive marketing.</p>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>A 5-email welcome sequence set up once will keep selling your products for years. AI writes each email in under 2 minutes. The setup investment is roughly 2 hours. The return is indefinite.</p></div>`
+      },
+      {
+        title: 'Your Custom Marketing AI Assistant',
+        duration: '17 min',
+        tag: 'AI Assistant Build',
+        body: `<h3>An AI That Sounds Exactly Like You</h3>
+<p>Generic AI content is obvious and forgettable. Your Marketing AI assistant needs to know your brand voice, your customers, your products, and your competitors — so every piece of content it produces sounds like it came directly from you.</p>
+<h3>What to Feed Your Marketing AI</h3>
+<ul>
+<li><strong>Brand Voice Guide</strong> — 3–5 paragraphs describing your tone: formal or casual? Serious or fun? What words do you always use? What do you never say?</li>
+<li><strong>Best-Performing Content</strong> — Your top 10 social posts, top 5 emails, and best-performing ads. This trains the AI on what your audience responds to.</li>
+<li><strong>Customer Profile</strong> — Age, income, pain points, goals, objections, the language they use to describe their problems.</li>
+<li><strong>Competitor Examples</strong> — Ads and posts from competitors you admire. Not to copy — to inform the AI about your market's tone and style.</li>
+<li><strong>Product Descriptions</strong> — Full descriptions of every product or service you sell, including benefits, features, prices, and FAQs.</li>
+</ul>
+<h3>Training Your Assistant</h3>
+<div class="callout"><span class="callout-label">Brand Voice Prompt</span><p>"You are the Marketing AI for [Business Name]. Our brand voice is [describe: e.g. 'warm, direct, and slightly irreverent — like a trusted friend who happens to be an expert']. Our target customer is [describe]. We never use corporate jargon. We always lead with benefits, not features. Here is our best-performing content for reference: [paste examples]."</p></div>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>The more context you give your Marketing AI, the better it performs. A well-trained Marketing AI should be indistinguishable from content you wrote yourself — except it produces it 20x faster.</p></div>`
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: 'Customer Service AI',
+    icon: '💬',
+    color: '#a97cf8',
+    tagline: 'Respond instantly to every customer, 24/7.',
+    lessons: [
+      {
+        title: 'Never Miss a Customer Again with AI',
+        duration: '7 min',
+        tag: 'Introduction',
+        body: `<h3>The Speed-to-Response Problem</h3>
+<p>Research shows that businesses responding to enquiries within 5 minutes are <strong>9 times more likely to close the sale</strong> than those responding after 30 minutes. Yet most small business owners are busy running operations — they simply can't monitor messages all day.</p>
+<p>AI customer service changes this. Your business can now respond instantly to every customer, 24 hours a day, 7 days a week — even while you're asleep, on holiday, or focused on other work.</p>
+<div class="callout"><span class="callout-label">The Real Cost of Slow Responses</span><p>If 10 potential customers message you this week and you respond to half of them too slowly, you could be losing 5 sales per week. At even a $200 average order value, that's $1,000 per week, $52,000 per year — lost to slow response times alone.</p></div>
+<h3>What This Module Builds</h3>
+<ul>
+<li>A no-code AI chatbot for your website or social media</li>
+<li>Automated email reply system that feels human and personal</li>
+<li>Review monitoring and response automation for Google and Yelp</li>
+<li>A smart FAQ system connected to your chatbot</li>
+<li>A Custom Customer Service AI trained on your business</li>
+</ul>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>You don't need to be available 24/7 — your AI does that for you. Your job shifts from answering routine questions to handling the complex conversations that actually need a human.</p></div>`
+      },
+      {
+        title: 'Building Your First AI Chatbot (No Code)',
+        duration: '20 min',
+        tag: 'Chatbot Build',
+        body: `<h3>The No-Code Chatbot Tools</h3>
+<p>You don't need to write a single line of code to build an AI chatbot for your business. These three tools each offer free plans and can be set up in under 2 hours:</p>
+<ul>
+<li><strong>Tidio</strong> — Best for e-commerce and product-based businesses. Integrates with Shopify and WooCommerce.</li>
+<li><strong>ManyChat</strong> — Best for Instagram and Facebook DM automation. Excellent for lead generation from social.</li>
+<li><strong>Chatbase</strong> — Best for website chatbots powered by your own data. Train it on your FAQ, product docs, or website pages.</li>
+</ul>
+<h3>What Your Chatbot Should Handle</h3>
+<ul>
+<li>Pricing questions — "How much does X cost?"</li>
+<li>Booking and availability — "Can I book for next Tuesday?"</li>
+<li>Product/service information — "What's included in your package?"</li>
+<li>Complaints and issues — Initial acknowledgement and escalation to you if needed</li>
+<li>FAQ — Any question your team answers more than once a week</li>
+</ul>
+<h3>The Escalation Rule</h3>
+<p>Always build in a clear escalation path. If your chatbot can't resolve a query in 2 exchanges, it should offer: "Let me connect you with the team directly — they'll get back to you within [X hours]." Never leave a customer stuck talking to a bot that can't help them.</p>
+<div class="callout"><span class="callout-label">Setup Tip</span><p>Start by listing the 20 most common questions customers ask you. These become the foundation of your chatbot's knowledge base. Add your top 5 objections and your most common complaints. Train your chatbot on these first before adding anything else.</p></div>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>A well-trained chatbot handles 60–80% of routine customer enquiries automatically. That's hours of your week returned to you — every single week.</p></div>`
+      },
+      {
+        title: 'Automated Email Replies That Feel Human',
+        duration: '12 min',
+        tag: 'Email Automation',
+        body: `<h3>The AI Email Routing System</h3>
+<p>The goal isn't to replace human email responses entirely — it's to make sure every email gets a fast, helpful first response, and that you only spend time on the conversations that genuinely need your attention.</p>
+<h3>The Zapier + AI Email Setup</h3>
+<p>Use Zapier to connect your email inbox to an AI model. When a new email arrives, Zapier sends it to Claude or GPT, which generates a contextual reply and drafts it in your inbox for your quick review and send — or sends automatically for standard query types.</p>
+<ul>
+<li>New email arrives in Gmail/Outlook</li>
+<li>Zapier triggers → sends to AI with your context prompt</li>
+<li>AI generates a draft reply in your tone</li>
+<li>Reply either auto-sends (for simple queries) or lands in Drafts for your approval</li>
+</ul>
+<h3>Making Replies Feel Human</h3>
+<p>The trick is in the system prompt. Tell the AI: your name, your role, your communication style, common query types you receive, and how you like to handle complaints. Include a small "natural delay" instruction — some businesses add a 5–15 minute delay before auto-sending to avoid the robotic feel of an instant reply.</p>
+<div class="callout"><span class="callout-label">Student Quote</span><p>"I set this up on a Friday afternoon. By Monday morning, my AI had drafted polished replies to 14 customer emails — I just reviewed, adjusted two of them, and hit send on the rest. What used to take me 45 minutes took 8." — Tanya M., Online Clothing Boutique</p></div>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>AI email automation isn't about removing the human touch — it's about ensuring every customer gets a fast, thoughtful first response, and that you spend your time on the conversations that actually need you.</p></div>`
+      },
+      {
+        title: 'Review Management & FAQ Automation',
+        duration: '11 min',
+        tag: 'Reputation & Systems',
+        body: `<h3>Reviews Are Your Most Powerful Marketing</h3>
+<p>88% of consumers trust online reviews as much as personal recommendations. Yet most small businesses treat reviews as an afterthought. AI lets you monitor, respond to, and even generate more reviews systematically — without it taking hours of your time.</p>
+<h3>Review Monitoring Setup</h3>
+<ul>
+<li>Set up Google Alerts for your business name</li>
+<li>Connect your Google Business Profile to a Zapier automation that notifies you instantly when a new review appears</li>
+<li>Use the same setup for Yelp, TripAdvisor, or Trustpilot if relevant to your business</li>
+</ul>
+<h3>AI Response Templates</h3>
+<p>For positive reviews, use AI to generate warm, specific responses that reference what the customer mentioned. For negative reviews, use this de-escalation framework:</p>
+<div class="callout"><span class="callout-label">Negative Review Response Prompt</span><p>"A customer left this review: [paste review]. Write a professional, empathetic response that: acknowledges their experience, apologises without admitting liability, offers to make it right, and invites them to contact us directly. Keep it under 80 words. Tone: calm, sincere, solution-focused."</p></div>
+<h3>Generating More Reviews</h3>
+<p>Set up an automated post-purchase email that goes out 3–5 days after a sale. Keep it simple: "How did we do? If you had a great experience, we'd be grateful for a quick review — it takes 30 seconds and helps us enormously." Link directly to your Google review page. Automate this once, collect reviews forever.</p>
+<h3>Smart FAQ Connected to Your Chatbot</h3>
+<p>Pull the 20 most common questions from your review responses, email inbox, and social comments. These become your FAQ document. Upload it to Chatbase or your chatbot platform so it can answer these instantly on your website.</p>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>Most businesses respond to reviews sporadically. A business that responds to every review within 24 hours — positive or negative — shows a level of professionalism that builds trust and wins customers from competitors who don't bother.</p></div>`
+      },
+      {
+        title: 'Your Custom Customer Service AI',
+        duration: '16 min',
+        tag: 'AI Assistant Build',
+        body: `<h3>Training Your Customer Service AI</h3>
+<p>In this lesson you'll build the most powerful customer service tool your business has ever had — a custom AI that knows your products, your policies, your pricing, your team, and your tone. Any member of your team (or no team member at all) can now answer any customer question perfectly.</p>
+<h3>What to Train It On</h3>
+<ul>
+<li><strong>Product/service catalogue</strong> — Every offering, with full descriptions, prices, variants, and FAQs</li>
+<li><strong>Business policies</strong> — Returns, refunds, delivery times, warranties, cancellation terms</li>
+<li><strong>Business details</strong> — Hours, location, contact methods, parking, access</li>
+<li><strong>Common complaints</strong> — Your top 10 complaints and the approved resolution for each</li>
+<li><strong>Brand tone guide</strong> — How formal or casual? What phrases do you use? What do you never say?</li>
+</ul>
+<h3>The System Prompt</h3>
+<div class="callout"><span class="callout-label">Customer Service AI Prompt</span><p>"You are the Customer Service AI for [Business Name]. You represent us with professionalism, warmth, and efficiency. You have access to all our product information, policies, and FAQs (uploaded). Your goal is to resolve every customer query fully. If a query requires a human decision, say: 'Let me check this with the team and get back to you within [X hours].' Never guess. Never make up information. Always be solution-focused."</p></div>
+<h3>Any Team Member Can Answer Anything</h3>
+<p>Once your Customer Service AI is set up, even a new staff member on their first day can handle complex customer queries confidently — because the AI has all the answers. This dramatically reduces training time and eliminates costly customer service mistakes.</p>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>Your Customer Service AI is your most patient, most knowledgeable, always-available team member. It never has a bad day, never forgets your policies, and never keeps a customer waiting.</p></div>`
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: 'Sales & Lead Growth',
+    icon: '🚀',
+    color: '#4ade80',
+    tagline: 'An AI sales machine that never stops prospecting.',
+    lessons: [
+      {
+        title: 'Building an AI-Powered Sales Machine',
+        duration: '8 min',
+        tag: 'Introduction',
+        body: `<h3>AI: The Salesperson Who Never Gets Rejected</h3>
+<p>Traditional sales is limited by human capacity. A salesperson can make 30–50 calls a day, write a handful of personalised emails, and manage a limited pipeline. AI removes these limits entirely. Your AI sales system prospects 24/7, qualifies leads automatically, sends personalised follow-ups, and manages your pipeline — without taking a lunch break or a holiday.</p>
+<p>This isn't about replacing the human connection in sales. It's about automating the high-volume, low-value tasks so you can focus on the high-value conversations that actually close deals.</p>
+<div class="callout"><span class="callout-label">The Sales Ceiling Problem</span><p>Most small businesses hit a sales ceiling because the owner is also the salesperson — and there are only so many hours in the day. AI breaks through this ceiling. Your pipeline is no longer limited by your personal capacity.</p></div>
+<h3>What This Module Builds</h3>
+<ul>
+<li>An AI lead generation system that finds your ideal customers automatically</li>
+<li>Personalised outreach scripts generated at scale</li>
+<li>A CRM automation pipeline that never loses a lead</li>
+<li>Follow-up sequences that run on autopilot for weeks</li>
+<li>A custom Sales AI assistant trained on your products and ideal buyers</li>
+</ul>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>AI doesn't just make you a better salesperson — it turns you into an entire sales team. The businesses that master this module will have a structural competitive advantage that's very difficult for competitors to replicate.</p></div>`
+      },
+      {
+        title: 'AI Lead Generation: Finding Your Ideal Customers',
+        duration: '17 min',
+        tag: 'Lead Generation',
+        body: `<h3>Where to Find Your Dream Customers</h3>
+<p>AI-powered lead generation starts with knowing exactly who you're looking for. Before you prospect, build a "dream customer" profile using this framework:</p>
+<ul>
+<li><strong>Business type</strong> — What industry, what size, what stage?</li>
+<li><strong>Geography</strong> — Local, national, or global?</li>
+<li><strong>Pain point</strong> — What specific problem do they have that you solve?</li>
+<li><strong>Buying signals</strong> — What events suggest they need you? (New hire, office move, funding round, etc.)</li>
+<li><strong>Decision maker</strong> — Who in the organisation signs off on buying your type of service?</li>
+</ul>
+<h3>AI Prospecting Channels</h3>
+<ul>
+<li><strong>LinkedIn</strong> — Use Sales Navigator or even the free search with AI-generated search strings to find exact-fit leads</li>
+<li><strong>Google Maps</strong> — For local businesses, search a category in your area and extract a prospect list</li>
+<li><strong>Business directories</strong> — Yelp, Clutch, G2, Bark, and local Chamber of Commerce directories</li>
+<li><strong>Social listening</strong> — Search Twitter/X, Reddit, and Facebook groups for people describing your solved problem</li>
+</ul>
+<div class="callout"><span class="callout-label">Lead Scoring Prompt</span><p>"Here is a list of 20 potential leads for my [type of business]: [paste list with details]. Score each lead from 1–10 based on these criteria: [list your criteria — industry fit, company size, budget indicators, urgency signals]. Explain the score for each lead in one sentence. Rank them from highest to lowest priority."</p></div>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>AI lead scoring turns a list of 100 cold prospects into a prioritised list of your 10 best opportunities. Stop wasting time on low-probability leads — let AI do the sorting.</p></div>`
+      },
+      {
+        title: 'Writing Sales Scripts That Get Responses',
+        duration: '14 min',
+        tag: 'Outreach',
+        body: `<h3>The 3-Message Outreach Sequence</h3>
+<p>The most effective cold outreach follows a 3-message sequence that builds credibility before making any ask. Most small businesses skip straight to the pitch — AI helps you do it right:</p>
+<ul>
+<li><strong>Message 1 — The Observation</strong>: Lead with something specific and genuine about them. Not flattery — an actual observation about their business, a recent achievement, or a challenge their industry faces. This shows you did your homework.</li>
+<li><strong>Message 2 — The Value Drop</strong>: 3–5 days later. Share something genuinely useful — a resource, insight, or tip relevant to their situation. No ask. Just pure value.</li>
+<li><strong>Message 3 — The Direct Ask</strong>: "Based on what you shared / what I know about your situation — would it make sense to have a 15-minute call to explore whether we could help?" Simple, direct, low-commitment.</li>
+</ul>
+<h3>Personalisation at Scale</h3>
+<div class="callout"><span class="callout-label">Personalised Outreach Prompt</span><p>"I'm reaching out to [Name] at [Company]. They recently [specific detail — e.g. launched a new location / posted about a hiring challenge / expanded their product line]. Write a personalised 3-sentence opening for a cold email that references this detail naturally, doesn't sound salesy, and ends with a soft curiosity hook. Tone: [professional / conversational]."</p></div>
+<h3>Subject Line Testing</h3>
+<p>Ask AI to generate 10 subject line variations for the same email — each using a different psychological trigger: curiosity, specificity, social proof, urgency, question format, name personalisation. Test two at a time across batches of 50 leads until you find your control (the one that consistently outperforms others).</p>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>Personalisation at scale is the unfair advantage AI gives to small businesses. A prospect who receives a personalised, value-first outreach message has a fundamentally different experience than one who receives a generic blast.</p></div>`
+      },
+      {
+        title: 'CRM Automation: Never Lose a Lead Again',
+        duration: '13 min',
+        tag: 'Systems',
+        body: `<h3>Why Leads Fall Through the Cracks</h3>
+<p>Most small businesses lose 30–50% of their leads simply because they fail to follow up consistently. A lead goes cold not because they weren't interested — but because you got busy and forgot to send the third follow-up. AI-powered CRM automation solves this permanently.</p>
+<h3>The Automated Pipeline</h3>
+<p>Build your pipeline with these five stages — and automate the movement between them:</p>
+<ul>
+<li><strong>New Lead</strong> → AI qualifies with automated questions or research; moves to Qualified or archives</li>
+<li><strong>Qualified</strong> → Automated personalised outreach sequence begins (3 messages over 7 days)</li>
+<li><strong>Engaged</strong> → Lead responded; AI drafts reply options for your review; books meeting automatically</li>
+<li><strong>Proposal</strong> → AI generates a first-draft proposal based on the conversation; you customise and send</li>
+<li><strong>Closed / Nurture</strong> → Won (trigger onboarding) or Lost (move to long-term nurture sequence)</li>
+</ul>
+<h3>The Free Stack</h3>
+<div class="callout"><span class="callout-label">Free CRM + AI Stack</span><p><strong>Notion</strong> (free) — Database for tracking every lead and their stage. <strong>Zapier</strong> (free tier) — Automates movement between stages and triggers emails. <strong>Claude/ChatGPT</strong> — Drafts follow-ups, qualifies leads, generates proposals. <strong>Calendly</strong> (free) — Automates meeting booking once a lead is engaged. Total monthly cost: $0.</p></div>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>A lead who doesn't hear back within 48 hours is often lost forever. An automated CRM pipeline means every lead is followed up, every time — even when you're at capacity running your business.</p></div>`
+      },
+      {
+        title: 'Your Custom Sales AI & Course Completion',
+        duration: '20 min',
+        tag: 'AI Assistant Build',
+        body: `<h3>Your Custom Sales AI</h3>
+<p>In this final lesson you'll build a Sales AI assistant that knows your products, your ideal buyers, your objections, your pricing, and your success stories — ready to help you generate outreach, qualify prospects, and close deals faster.</p>
+<h3>Sales AI Capabilities</h3>
+<ul>
+<li>Generate personalised cold outreach for any prospect in seconds</li>
+<li>Research a prospect's business and suggest the most relevant angle</li>
+<li>Draft proposal documents based on a discovery call summary</li>
+<li>Answer any objection using your proven responses</li>
+<li>Suggest upsell opportunities based on customer history</li>
+<li>Generate follow-up sequences for prospects at any stage</li>
+</ul>
+<h3>A Full Recap: Your Four AI Assistants</h3>
+<p>By completing this course, you've built four custom AI assistants — one for each critical area of your business:</p>
+<div class="callout"><span class="callout-label">Your AI Team</span><p>📊 <strong>Finance AI</strong> — Bookkeeping, P&amp;L reports, cash flow forecasts, tax prep.<br><br>📣 <strong>Marketing AI</strong> — Ad copy, social content, email campaigns, brand voice.<br><br>💬 <strong>Customer Service AI</strong> — Chatbot, email replies, review management, FAQ.<br><br>🚀 <strong>Sales AI</strong> — Lead generation, outreach scripts, proposals, pipeline management.</p></div>
+<h3>What's Next</h3>
+<p>The businesses that win in the next decade won't be the ones with the most staff or the biggest budgets. They'll be the ones that harness AI to move faster, serve customers better, and scale without the traditional constraints of time and headcount.</p>
+<p>You now have the tools, the knowledge, and the systems. The only thing left is execution.</p>
+<div class="takeaway"><span class="takeaway-label">Key Takeaway</span><p>Congratulations — you've completed the Auro AI Business Mastery program. You're not just ahead of your competitors. You're operating with a completely different playbook. Now go build something remarkable.</p></div>`
+      }
+    ]
+  }
+];
+
+// ════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════
+const STORAGE_KEY = 'auro_ai_state';
+
+let state = {
+  started: false,
+  currentModule: 0,
+  currentLesson: 0,
+  completed: {}
+};
+
+// Track which sidebar module groups are open
+let openMods = new Set([0]);
+
+function saveState() {
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function loadState() {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      state = Object.assign(state, parsed);
+    }
+  } catch(e) {}
+}
+
+// ════════════════════════════════════════════════════════
+//  UTILITIES
+// ════════════════════════════════════════════════════════
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  return `${r},${g},${b}`;
+}
+
+function overallPct() {
+  return Math.round(Object.keys(state.completed).length / 20 * 100);
+}
+
+function flatLessons() {
+  const arr = [];
+  MODULES.forEach((mod, mi) => {
+    mod.lessons.forEach((lesson, li) => {
+      arr.push({ mi, li, lesson });
+    });
+  });
+  return arr;
+}
+
+function lessonKey(mi, li) { return `${mi}-${li}`; }
+
+function isDone(mi, li) { return !!state.completed[lessonKey(mi, li)]; }
+
+function modProgress(mi) {
+  return MODULES[mi].lessons.filter((_, li) => isDone(mi, li)).length;
+}
+
+// ════════════════════════════════════════════════════════
+//  HEADER + SIDEBAR PROGRESS
+// ════════════════════════════════════════════════════════
+function updateProgress() {
+  const pct = overallPct();
+  const done = Object.keys(state.completed).length;
+  document.getElementById('header-bar').style.width = pct + '%';
+  document.getElementById('header-pct').textContent = pct + '% complete';
+  document.getElementById('sidebar-bar').style.width = pct + '%';
+  document.getElementById('sidebar-done').textContent = done;
+}
+
+// ════════════════════════════════════════════════════════
+//  SIDEBAR
+// ════════════════════════════════════════════════════════
+function buildSidebar() {
+  updateProgress();
+  const container = document.getElementById('sidebar-modules');
+  container.innerHTML = MODULES.map((mod, mi) => {
+    const mp = modProgress(mi);
+    const isOpen = openMods.has(mi);
+    const isCurrent = state.started && state.currentModule === mi;
+    const accentBg = `rgba(${hexToRgb(mod.color)},0.15)`;
+
+    const lessons = mod.lessons.map((lesson, li) => {
+      const done = isDone(mi, li);
+      const active = state.started && state.currentModule === mi && state.currentLesson === li;
+      const borderColor = active ? mod.color : 'transparent';
+      return `
+        <div class="lesson-item${active ? ' active' : ''}"
+          style="border-left-color:${borderColor}"
+          onclick="goToLesson(${mi},${li})">
+          <div class="lesson-check${done ? ' done' : ''}">${done ? '✓' : ''}</div>
+          <span class="lesson-title">${lesson.title}</span>
+          <span class="lesson-dur">${lesson.duration}</span>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="mod-group">
+        <button class="mod-toggle" aria-expanded="${isOpen}"
+          onclick="toggleModule(${mi})">
+          <div class="mod-icon" style="background:${accentBg}">${mod.icon}</div>
+          <div class="mod-info">
+            <span class="mod-title">${mod.title}</span>
+            <span class="mod-progress-text">${mp}/5 lessons</span>
+          </div>
+          <span class="mod-chevron">▼</span>
+        </button>
+        <div class="lesson-list"${isOpen ? ' style="display:block"' : ''}>${lessons}</div>
+      </div>`;
+  }).join('');
+}
+
+function toggleModule(mi) {
+  if (openMods.has(mi)) { openMods.delete(mi); } else { openMods.add(mi); }
+  buildSidebar();
+}
+
+// ════════════════════════════════════════════════════════
+//  MOBILE SIDEBAR
+// ════════════════════════════════════════════════════════
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const isOpen = sidebar.classList.contains('open');
+  sidebar.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('visible', !isOpen);
+}
+
+function closeSidebarMobile() {
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('visible');
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  WELCOME SCREEN
+// ════════════════════════════════════════════════════════
+function showWelcome() {
+  const pills = MODULES.map(m =>
+    `<div class="welcome-mod-pill">
+      <div class="w-mod-dot" style="background:${m.color}"></div>
+      <span class="w-mod-name">${m.icon} ${m.title}</span>
+    </div>`
+  ).join('');
+
+  document.getElementById('main').innerHTML = `
+    <div class="welcome">
+      <div class="welcome-glow"></div>
+      <div class="welcome-inner">
+        <span class="w-eyebrow">Welcome to Your Course</span>
+        <h1 class="w-h1">Auro AI <span class="gold">Business Mastery</span></h1>
+        <p class="w-sub">You have access to 4 complete modules and 20 lessons covering AI for Finance, Marketing, Customer Service, and Sales. Each lesson ends with a working AI system you can use in your business immediately.</p>
+        <div class="welcome-modules">${pills}</div>
+        <button class="btn-begin" onclick="beginCourse()">Begin Module 1 &rarr;</button>
+      </div>
+    </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+//  LESSON VIEW
+// ════════════════════════════════════════════════════════
+function renderLesson() {
+  const mi = state.currentModule;
+  const li = state.currentLesson;
+  const mod = MODULES[mi];
+  const lesson = mod.lessons[li];
+  const done = isDone(mi, li);
+  const rgb = hexToRgb(mod.color);
+  const mcBg = `rgba(${rgb},0.08)`;
+
+  const flat = flatLessons();
+  const idx = flat.findIndex(x => x.mi === mi && x.li === li);
+  const prev = idx > 0 ? flat[idx - 1] : null;
+  const next = idx < flat.length - 1 ? flat[idx + 1] : null;
+
+  const prevBtn = prev
+    ? `<button class="nav-btn" onclick="goToLesson(${prev.mi},${prev.li})">
+        <span class="nav-btn-label">← Previous</span>
+        <span class="nav-btn-title">${prev.lesson.title}</span>
+       </button>`
+    : `<button class="nav-btn" disabled>
+        <span class="nav-btn-label">← Previous</span>
+        <span class="nav-btn-title">Start of course</span>
+       </button>`;
+
+  const nextBtn = next
+    ? `<button class="nav-btn right" onclick="goToLesson(${next.mi},${next.li})">
+        <span class="nav-btn-label">Next →</span>
+        <span class="nav-btn-title">${next.lesson.title}</span>
+       </button>`
+    : `<button class="nav-btn right" disabled>
+        <span class="nav-btn-label">Next →</span>
+        <span class="nav-btn-title">End of course</span>
+       </button>`;
+
+  const completeBtn = done
+    ? `<button class="btn-already-done">&#10003; Completed</button>`
+    : `<button class="btn-complete" onclick="markComplete()">Mark Complete &amp; Continue &rarr;</button>`;
+
+  const doneBadge = done ? `<span class="badge-done">&#10003; Completed</span>` : '';
+  const lessonNum = `${mi + 1}.${li + 1}`;
+
+  document.getElementById('main').innerHTML = `
+    <div class="lesson-view fade-in" id="lesson-content"
+      style="--mc:${mod.color};--mc-bg:${mcBg}">
+      <p class="breadcrumb">${mod.title} <span>&rsaquo; ${lesson.title}</span></p>
+      <div class="lesson-video-card">
+        <div class="lesson-video-embed">
+          <!--
+            VIDEO EMBED — uncomment one option for this lesson:
+
+            YouTube:
+            <iframe width="100%" height="100%"
+              src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+              frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+              encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+              style="position:absolute;inset:0;width:100%;height:100%;border:none;"></iframe>
+
+            Vimeo:
+            <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID"
+              width="100%" height="100%" frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              style="position:absolute;inset:0;width:100%;height:100%;border:none;"></iframe>
+
+            HTML5:
+            <video controls style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <source src="lesson-${lessonNum}.mp4" type="video/mp4">
+            </video>
+          -->
+          <div class="lesson-play-btn"></div>
+          <div class="lesson-video-caption">
+            <strong>${lesson.title}</strong>
+            (Paste your video embed here)
+          </div>
+          <span class="lesson-duration-badge">&#9201; ${lesson.duration}</span>
+        </div>
+      </div>
+      <p class="lesson-tag-line">${mod.icon} ${mod.title} &middot; ${lesson.tag}</p>
+      <h1 class="lesson-h1">${lesson.title}</h1>
+      <div class="lesson-meta">
+        <span class="lesson-meta-item">&#9201; ${lesson.duration}</span>
+        <span class="lesson-meta-item">Lesson ${lessonNum}</span>
+        ${doneBadge}
+      </div>
+      <div class="lesson-body">${lesson.body}</div>
+      <div class="lesson-nav">
+        ${prevBtn}
+        ${completeBtn}
+        ${nextBtn}
+      </div>
+    </div>`;
+
+  document.getElementById('main').scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+// ════════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════════
+function goToLesson(mi, li) {
+  state.currentModule = mi;
+  state.currentLesson = li;
+  state.started = true;
+  openMods.add(mi);
+  saveState();
+  renderLesson();
+  buildSidebar();
+  closeSidebarMobile();
+}
+
+function beginCourse() {
+  goToLesson(0, 0);
+}
+
+// ════════════════════════════════════════════════════════
+//  MARK COMPLETE
+// ════════════════════════════════════════════════════════
+function markComplete() {
+  const mi = state.currentModule;
+  const li = state.currentLesson;
+  state.completed[lessonKey(mi, li)] = true;
+  saveState();
+
+  const isLastLesson = li === MODULES[mi].lessons.length - 1;
+  const isLastModule = mi === MODULES.length - 1;
+
+  if (!isLastLesson) {
+    goToLesson(mi, li + 1);
+  } else if (!isLastModule) {
+    showModuleComplete(mi);
+  } else {
+    showCourseComplete();
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  MODULE COMPLETE
+// ════════════════════════════════════════════════════════
+function showModuleComplete(mi) {
+  const mod = MODULES[mi];
+  const nextMod = MODULES[mi + 1];
+  buildSidebar();
+  updateProgress();
+
+  document.getElementById('main').innerHTML = `
+    <div class="celebrate fade-in">
+      <div class="celebrate-inner">
+        <div class="celebrate-icon"
+          style="background:rgba(${hexToRgb(mod.color)},0.15);border:2px solid ${mod.color}">
+          ${mod.icon}
+        </div>
+        <h2 class="celebrate-h">Module ${mi + 1} Complete!</h2>
+        <p class="celebrate-sub">
+          You've finished <strong>${mod.title}</strong> and built your first AI system for this area of your business.
+          Up next: <strong>${nextMod.title}</strong> — ${nextMod.tagline}
+        </p>
+        <div class="celebrate-btns">
+          <button class="btn-gold" onclick="beginNextModule(${mi + 1})">
+            Start ${nextMod.title} &rarr;
+          </button>
+          <button class="btn-outline" onclick="goToLesson(${mi}, 0)">
+            Review Module
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function beginNextModule(nextMi) {
+  goToLesson(nextMi, 0);
+}
+
+// ════════════════════════════════════════════════════════
+//  COURSE COMPLETE
+// ════════════════════════════════════════════════════════
+function showCourseComplete() {
+  buildSidebar();
+  updateProgress();
+
+  const modGrid = MODULES.map(m => `
+    <div class="cc-mod">
+      <span class="cc-mod-icon">${m.icon}</span>
+      <span class="cc-mod-name">${m.title}</span>
+    </div>`).join('');
+
+  document.getElementById('main').innerHTML = `
+    <div class="celebrate fade-in">
+      <div class="celebrate-inner">
+        <div style="font-size:3rem;margin-bottom:20px">🏆</div>
+        <p style="font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:12px">Program Complete</p>
+        <h2 class="celebrate-h">You're an <span style="color:var(--gold)">Auro AI Graduate.</span></h2>
+        <p class="celebrate-sub">You've completed all 4 modules and 20 lessons. You've built AI systems for Finance, Marketing, Customer Service, and Sales. You're now operating with a competitive advantage that most businesses won't have for years.</p>
+        <div class="course-complete-mods">${modGrid}</div>
+        <button class="btn-gold" onclick="goToLesson(0,0)">Review the Full Course &#x21A9;</button>
+      </div>
+    </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════
+function init() {
+  loadState();
+  // Open sidebar to the current module
+  if (state.started) openMods = new Set([state.currentModule]);
+  buildSidebar();
+
+  if (!state.started) {
+    showWelcome();
+  } else {
+    renderLesson();
+  }
+}
+
+init();
+</script>
+</body>
+</html>
